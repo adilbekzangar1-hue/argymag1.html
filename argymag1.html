@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGYMAQ.pro — Профессиональный магазин автомобильных шин</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* —————————————————————————————————————————————————————————
+           БАЗОВЫЕ И ОБЩИЕ СТИЛИ
+           ————————————————————————————————————————————————————————— */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1240px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* —————————————————————————————————————————————————————————
+           ШАПКА САЙТА (HEADER)
+           ————————————————————————————————————————————————————————— */
+        header {
+            background-color: #1a1c1e;
+            color: #fff;
+            padding: 20px 0;
+            border-bottom: 3px solid #ff6600;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #ff6600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .phone {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .phone:hover {
+            color: #ff6600;
+        }
+
+        .language-select {
+            display: flex;
+            background-color: #2c2f33;
+            padding: 4px;
+            border-radius: 20px;
+            border: 1px solid #444;
+        }
+
+        .lang-link {
+            text-decoration: none;
+            color: #999;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-link.active {
+            color: #fff;
+            background-color: #ff6600;
+        }
+
+        .lang-link:hover:not(.active) {
+            color: #fff;
+        }
+
+        /* —————————————————————————————————————————————————————————
+           ГЛАВНЫЙ БАННЕР (HERO SECTION)
+           ————————————————————————————————————————————————————————— */
+        .hero {
+            position: relative;
+            height: 520px;
+            background: linear-gradient(135deg, #1e2022 0%, #0f1011 100%);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* Фоновый декоративный элемент */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 70%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,102,0,0.15) 0%, rgba(0,0,0,0) 70%);
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .hero-text {
+            padding-right: 30px;
+        }
+
+        .hero-text h1 {
+            font-size: 46px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: #ff6600;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background-color: #e65c00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 102, 0, 0.6);
+        }
+
+        /* Стилизованная 3D-визуализация шин */
+        .tire-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            height: 100%;
+        }
+
+        .tire-wrapper {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .tire {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.8);
+            border: 4px solid #222;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Используем реальные изображения шин */
+        .tire.winter {
+            background-image: url('https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=500');
+            transform: rotateY(-15deg) rotateX(5deg);
+        }
+
+        .tire.summer {
+            background-image: url('https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=500');
+            transform: rotateY(15deg) rotateX(5deg);
+        }
+
+        .tire-wrapper:hover .tire {
+            transform: scale(1.08) rotate(10deg);
+        }
+
+        .tire-shadow {
+            position: absolute;
+            bottom: -20px;
+            left: 10%;
+            width: 80%;
+            height: 20px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+        }
+
+        /* Навигационные точки */
+        .dots-nav {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 5;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active, .dot:hover {
+            background-color: #ff6600;
+            width: 28px;
+            border-radius: 6px;
+        }
+
+        /* —————————————————————————————————————————————————————————
+           ОСНОВНОЙ КОНТЕНТ (GRID СТРУКТУРА)
+           ————————————————————————————————————————————————————————— */
+        .main-content {
+            padding: 60px 0;
+            display: grid;
+            grid-template-columns: 2.3fr 1fr;
+            gap: 40px;
+        }
+
+        /* —————————————————————————————————————————————————————————
+           КАТАЛОГ ТОВАРОВ
+           ————————————————————————————————————————————————————————— */
+        .catalog h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .catalog h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #ff6600;
+            border-radius: 2px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            border: 1px solid #eef2f5;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .product-image-holder {
+            width: 100%;
+            height: 200px;
+            background-color: #f8fafc;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image-holder img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image-holder img {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .badge.winter { background-color: #0077ff; }
+        .badge.summer { background-color: #ff9900; }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1c1e;
+            margin-bottom: 8px;
+            height: 44px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .product-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pt: 10px;
+        }
+
+        .price {
+            font-size: 19px;
+            font-weight: 800;
+            color: #1a1c1e;
+        }
+
+        .buy-btn {
+            background-color: #1a1c1e;
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .buy-btn:hover {
+            background-color: #ff6600;
+            transform: scale(1.1);
+        }
+
+        /* —————————————————————————————————————————————————————————
+           ФОРМА ЗАКАЗА / ПОДБОРА (PREMIUM LOOK)
+           ————————————————————————————————————————————————————————— */
+        .order-form {
+            background-color: #fff;
+            padding: 35px 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f5;
+            height: fit-content;
+            position: sticky;
+            top: 110px;
+        }
+
+        .order-form h2 {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1a1c1e;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dcdde1;
+            border-radius: 8px;
+            background-color: #f8fafc;
+            font-size: 14px;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #ff6600;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(255,102,0,0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #e65c00;
+        }
+
+        /* —————————————————————————————————————————————————————————
+           ПЛАВАЮЩИЕ ИНТЕРФЕЙСНЫЕ КНОПКИ (ПРАВЫЙ НИЖНИЙ УГОЛ)
+           ————————————————————————————————————————————————————————— */
+        .floating-buttons {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+        }
+
+        .floating-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: none;
+        }
+
+        .floating-btn i {
+            font-size: 18px;
+        }
+
+        .btn-cart {
+            background: linear-gradient(135deg, #ff6600 0%, #ff4500 100%);
+        }
+
+        .btn-support {
+            background: linear-gradient(135deg, #1f2c39 0%, #10171e 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .floating-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* Бэдж количества товаров внутри кнопки корзины */
+        .cart-count {
+            background-color: #fff;
+            color: #ff6600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 800;
+            margin-left: 2px;
+        }
+
+        /* —————————————————————————————————————————————————————————
+           ПОДВАЛ (FOOTER)
+           ————————————————————————————————————————————————————————— */
+        footer {
+            background-color: #1a1c1e;
+            color: #7f8c8d;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 14px;
+            border-top: 1px solid #2c2f33;
+        }
+
+        /* —————————————————————————————————————————————————————————
+           АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
+           ————————————————————————————————————————————————————————— */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            .tire-display {
+                display: none; /* Скрываем декоративные шины на планшетах для экономии места */
+            }
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .order-form {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero { height: auto; padding: 60px 0; }
+            .hero-text h1 { font-size: 32px; }
+            .hero-text p { font-size: 16px; }
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                gap: 10px;
+            }
+            .floating-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 20px;
+            }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">ARGYMAQ<span>.pro</span></div>
+        <div class="header-right">
+            <a href="tel:+77083635667" class="phone">
+                <i class="fas fa-phone-alt"></i> <span id="phone-text">8 (708) 363-56-67</span>
+            </a>
+            <div class="language-select">
+                <a href="javascript:void(0);" class="lang-link active" onclick="changeLanguage('ru', this)">RU</a>
+                <a href="javascript:void(0);" class="lang-link" onclick="changeLanguage('kz', this)">KZ</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 id="hero-title">Надежные шины для вашей безопасности</h1>
+                <p id="hero-subtitle">Огромный выбор летней и зимней резины от ведущих мировых брендов</p>
+                <a href="#catalog-section" class="hero-btn" id="hero-btn-text">Перейти в каталог</a>
+            </div>
+            <div class="tire-display">
+                <div class="tire-wrapper">
+                    <div class="tire winter"></div>
+                    <div class="tire-shadow"></div>
+                </div>
+                <div class="tire-wrapper">
+                    <div class="tire summer"></div>
+                    <div class="tire-shadow"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dots-nav">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+</section>
+
+<div class="container main-content" id="catalog-section">
+    
+    <main class="catalog">
+        <h2 id="catalog-title">Каталог продуктов</h2>
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="product-image-holder">
+                    <span class="badge winter" id="badge-winter">Зимняя</span>
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=300" alt="Premium Ice Guard">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Premium Ice Guard SUV</div>
+                    <div class="product-meta">R16 &bull; Зима &bull; Шипы</div>
+                    <div class="product-footer">
+                        <div class="price">30 000 тг</div>
+                        <button class="buy-btn" onclick="addToCart()"><i class="fas fa-shopping-basket"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-holder">
+                    <span class="badge summer" id="badge-summer-1">Летняя</span>
+                    <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=300" alt="Fast Sport Contact">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Fast Sport Contact-3</div>
+                    <div class="product-meta">R17 &bull; Лето &bull; Спорт</div>
+                    <div class="product-footer">
+                        <div class="price">35 500 тг</div>
+                        <button class="buy-btn" onclick="addToCart()"><i class="fas fa-shopping-basket"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-holder">
+                    <span class="badge summer" id="badge-summer-2">Летняя</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe6oOsi2g08kGXnUNsImqVbFa_6l6TDFN2Ygwpuq24s0uXSREmnxiMECZc&s=300" alt="Grand Touring Eco">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Grand Touring Eco Pro</div>
+                    <div class="product-meta">R15 &bull; Лето &bull; Эко</div>
+                    <div class="product-footer">
+                        <div class="price">44 500 тг</div>
+                        <button class="buy-btn" onclick="addToCart()"><i class="fas fa-shopping-basket"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <section class="order-form">
+        <h2 id="form-title">Помочь с подбором?</h2>
+        <form onsubmit="handleFormSubmit(event)">
+            <div class="input-group">
+                <label for="name" id="label-name">Ваше имя</label>
+                <input type="text" id="name" required placeholder="Иван Иванов">
+            </div>
+            <div class="input-group">
+                <label for="email">E-mail*</label>
+                <input type="email" id="email" required placeholder="example@mail.com">
+            </div>
+            <div class="input-group">
+                <label for="phone-form" id="label-phone">Номер телефона</label>
+                <input type="tel" id="phone-form" required placeholder="+7 (708) 363-56-67">
+            </div>
+            <div class="input-group">
+                <label id="label-select">Желаемый диаметр</label>
+                <select id="product">
+                    <option value="r15">R15</option>
+                    <option value="r16">R16</option>
+                    <option value="r17" selected>R17</option>
+                    <option value="r18">R18</option>
+                    <option value="r19">R19 и выше</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn" id="form-btn">Отправить заявку</button>
+        </form>
+    </section>
+</div>
+
+<div class="floating-buttons">
+    <button class="floating-btn btn-cart" onclick="openCart()">
+        <i class="fas fa-shopping-cart"></i> <span id="cart-text">КОРЗИНА</span> (<span id="cart-counter">0</span>)
+    </button>
+    <button class="floating-btn btn-support" onclick="contactSupport()">
+        <i class="fas fa-headset"></i> <span id="support-text">ПОДДЕРЖКА 24/7</span>
+    </button>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2026 ARGYMAQ.pro. Все права защищены. Официальный демонстрационный сайт компании.</p>
+    </div>
+</footer>
+
+<script>
+    // Логика корзины товаров
+    let cartCount = 0;
+    function addToCart() {
+        cartCount++;
+        document.getElementById('cart-counter').innerText = cartCount;
+        alert(currentLang === 'ru' ? 'Товар успешно добавлен в корзину!' : 'Тауар себетке сәтті қосылды!');
+    }
+
+    function openCart() {
+        alert(currentLang === 'ru' ? `В вашей корзине сейчас товаров: ${cartCount} шт. Переходим к оформлению?` : `Сіздің себетіңізде қазір тауар бар: ${cartCount} дана. Рсімдеуге өтеміз бе?`);
+    }
+
+    // Логика кнопки техподдержки
+    function contactSupport() {
+        alert(currentLang === 'ru' ? 'Соединение со специалистом техподдержки ARGYMAQ... Пожалуйста, подождите.' : 'ARGYMAQ қолдау көрсету маманымен байланысу... Күте тұрыңыз.');
+    }
+
+    // Отправка формы подбора
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        alert(currentLang === 'ru' ? 'Менеджер свяжется с вами в течение 10 минут!' : 'Менеджер сізбен 10 минут ішінде байланысады!');
+        event.target.reset();
+    }
+
+    // Мультиязычность (RU / KZ)
+    let currentLang = 'ru';
+    const translations = {
+        ru: {
+            heroTitle: "Надежные шины для вашей безопасности",
+            heroSubtitle: "Огромный выбор летней и зимней резины от ведущих мировых брендов",
+            heroBtn: "Перейти в каталог",
+            catalogTitle: "Каталог продуктов",
+            formTitle: "Помочь с подбором?",
+            labelName: "Ваше имя",
+            labelPhone: "Номер телефона",
+            labelSelect: "Желаемый диаметр",
+            formBtn: "Отправить заявку",
+            cartText: "КОРЗИНА",
+            supportText: "ПОДДЕРЖКА 24/7",
+            badgeWinter: "Зимняя",
+            badgeSummer: "Летняя"
+        },
+        kz: {
+            heroTitle: "Сіздің қауіпсіздігіңізге арналған сенімді шиналар",
+            heroSubtitle: "Әлемдік жетекші брендтердің жазғы және қысқы шиналарының үлкен таңдауы",
+            heroBtn: "Каталогқа өту",
+            catalogTitle: "Өнімдер каталогы",
+            formTitle: "Таңдауға көмектесу керек пе?",
+            labelName: "Сіздің есіміңіз",
+            labelPhone: "Телефон нөмірі",
+            labelSelect: "Қажетті диаметр",
+            formBtn: "Өтінім жіберу",
+            cartText: "СЕБЕТ",
+            supportText: "ҚОЛДАУ 24/7",
+            badgeWinter: "Қысқы",
+            badgeSummer: "Жазғы"
+        }
+    };
+
+    function changeLanguage(lang, element) {
+        currentLang = lang;
+        
+        // Переключаем активный класс на ссылках языков
+        document.querySelectorAll('.lang-link').forEach(link => link.classList.remove('active'));
+        element.classList.add('active');
+
+        // Обновляем текстовые узлы на странице
+        document.getElementById('hero-title').innerText = translations[lang].heroTitle;
+        document.getElementById('hero-subtitle').innerText = translations[lang].heroSubtitle;
+        document.getElementById('hero-btn-text').innerText = translations[lang].heroBtn;
+        document.getElementById('catalog-title').innerText = translations[lang].catalogTitle;
+        document.getElementById('form-title').innerText = translations[lang].formTitle;
+        document.getElementById('label-name').innerText = translations[lang].labelName;
+        document.getElementById('label-phone').innerText = translations[lang].labelPhone;
+        document.getElementById('label-select').innerText = translations[lang].labelSelect;
+        document.getElementById('form-btn').innerText = translations[lang].formBtn;
+        document.getElementById('cart-text').innerText = translations[lang].cartText;
+        document.getElementById('support-text').innerText = translations[lang].supportText;
+        document.getElementById('badge-winter').innerText = translations[lang].badgeWinter;
+        document.getElementById('badge-summer-1').innerText = translations[lang].badgeSummer;
+        document.getElementById('badge-summer-2').innerText = translations[lang].badgeSummer;
+    }
+</script>
+
+</body>
+</html>
